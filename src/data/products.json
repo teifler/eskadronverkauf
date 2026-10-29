@@ -1,0 +1,13 @@
+{
+  "_hinweis": "Demo-Artikel. Pro Artikel: Titel, Preis, Foto (public/images/), Link zum echten Listing. 'world' = Farbwelt-Filter (sage|rose|navy|braun). 'fresh' = Fresh-Drops-Sektion. 'demo': true solange kein echtes Produktfoto/Listing hinterlegt ist.",
+  "products": [
+    { "brand": "Eskadron", "name": "Schabracke Platinum", "size": "WB", "cond": "Sehr gut", "price": 42, "plat": "Vinted", "url": "https://www.vinted.de/member/3185481644-katepahl", "img": "flatlay.webp", "fresh": false, "world": "rose", "demo": true },
+    { "brand": "Kentucky", "name": "Saddle Pad Velvet", "size": "Full", "cond": "Neuwertig", "price": 58, "plat": "Vinted", "url": "https://www.vinted.de/member/3185481644-katepahl", "img": "chestnut.webp", "fresh": true, "world": "braun", "demo": true },
+    { "brand": "Samshield", "name": "Reithelm Shadowmatt", "size": "M", "cond": "Gut", "price": 189, "plat": "Kleinanzeigen", "url": "https://www.kleinanzeigen.de/s-bestandsliste.html?userId=37542719", "img": "hero_bay.webp", "fresh": false, "world": "navy", "demo": true },
+    { "brand": "Mattes", "name": "Lammfell-Schabracke", "size": "DR", "cond": "Sehr gut", "price": 95, "plat": "Vinted", "url": "https://www.vinted.de/member/3185481644-katepahl", "img": "white_port.webp", "fresh": true, "world": "sage", "demo": true },
+    { "brand": "PS of Sweden", "name": "Halfter Set", "size": "Cob", "cond": "Neuwertig", "price": 34, "plat": "Vinted", "url": "https://www.vinted.de/member/3185481644-katepahl", "img": "brown_port.webp", "fresh": false, "world": "braun", "demo": true },
+    { "brand": "Maya Delorez", "name": "Reitleggings", "size": "S", "cond": "Sehr gut", "price": 39, "plat": "Vinted", "url": "https://www.vinted.de/member/3185481644-katepahl", "img": "dressage.webp", "fresh": true, "world": "navy", "demo": true },
+    { "brand": "Eskadron", "name": "Bandagen Fleece, 4er", "size": "WB", "cond": "Gut", "price": 18, "plat": "Kleinanzeigen", "url": "https://www.kleinanzeigen.de/s-bestandsliste.html?userId=37542719", "img": "palomino.webp", "fresh": false, "world": "sage", "demo": true },
+    { "brand": "Pikeur", "name": "Turnierjackett", "size": "38", "cond": "Sehr gut", "price": 74, "plat": "Vinted", "url": "https://www.vinted.de/member/3185481644-katepahl", "img": "gallop.webp", "fresh": true, "world": "navy", "demo": true }
+  ]
+}

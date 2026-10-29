@@ -1,0 +1,39 @@
+---
+import { asset } from '../lib/url';
+const { id, over, title, titleSer, products, showWorlds = false } = Astro.props;
+const WORLD_COLORS: Record<string, string> = { sage: '#9fae9b', rose: '#e8bfb4', navy: '#334257', braun: '#6e4a35' };
+const euro = (v: number) => v.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: v % 1 ? 2 : 0 });
+---
+<section id={id} aria-label={over}>
+  <div class="sechead rv">
+    <span class="over">{over}</span>
+    <h2>{title} <span class="ser">{titleSer}</span></h2>
+  </div>
+  {showWorlds && (
+    <div class="worlds rv" role="group" aria-label="Farbwelten">
+      <button class="world on" data-world="all"><span class="dot" style="background:#5e7159"></span>Alle Farben</button>
+      <button class="world" data-world="sage"><span class="dot" style="background:#9fae9b"></span>Salbei</button>
+      <button class="world" data-world="rose"><span class="dot" style="background:#e8bfb4"></span>Rosé</button>
+      <button class="world" data-world="navy"><span class="dot" style="background:#334257"></span>Navy</button>
+      <button class="world" data-world="braun"><span class="dot" style="background:#6e4a35"></span>Braun</button>
+    </div>
+  )}
+  <div class="grid">
+    {products.map((p: any) => (
+      <a class="card rv" href={p.url} target="_blank" rel="noopener" data-world={p.world} data-prod={`${p.brand} ${p.name}`}>
+        <span class="imgwrap">
+          <img src={asset(`images/${p.img}`)} alt={p.demo ? `Symbolfoto zum Demo-Artikel ${p.brand} ${p.name}` : `${p.brand} ${p.name}`} loading="lazy" width="500" height="575" />
+          {p.demo && <span class="ptag"><i class="wd" style={`background:${WORLD_COLORS[p.world]}`}></i>Demo · Symbolfoto</span>}
+        </span>
+        <span class="meta">
+          <span class="brand">{p.brand}</span>
+          <span class="name">{p.name} · Gr. {p.size}</span>
+          <span class="bottom">
+            <span class="price">{euro(p.price)}</span>
+            <span class="plat">{p.plat}</span>
+          </span>
+        </span>
+      </a>
+    ))}
+  </div>
+</section>

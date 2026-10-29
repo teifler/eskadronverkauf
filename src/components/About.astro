@@ -1,0 +1,22 @@
+---
+import site from '../data/site.json';
+import { asset } from '../lib/url';
+---
+<section id="ueber" aria-label="Über uns">
+  <div class="duo">
+    <div class="rv">
+      <span class="kick">Über uns</span>
+      <h3>Hi, wir sind <span class="ser">eskadronverkauf.</span></h3>
+      <p>Hinter dem Account steht Nele – Pferdemädchen durch und durch. Gemeinsam mit Kate läuft der Verkauf über unser Vinted-Profil, dazu kommt Kleinanzeigen. Jedes Teil wird geprüft, hübsch fotografiert und ehrlich beschrieben.</p>
+      <div class="pillrow">
+        <a class="pill g" href={site.links.instagram} target="_blank" rel="noopener">Instagram ↗</a>
+        <a class="pill" href={site.links.tiktok} target="_blank" rel="noopener">TikTok ↗</a>
+        <a class="pill g" href={site.links.vinted} target="_blank" rel="noopener">Vinted ↗</a>
+        <a class="pill" href={site.links.kleinanzeigen} target="_blank" rel="noopener">Kleinanzeigen ↗</a>
+      </div>
+    </div>
+    <div class="imgs single rv">
+      <img class="i1" src={asset('images/mountain.webp')} width="1300" height="731" alt="Pferd in weiter Landschaft vor Bergen" loading="lazy" />
+    </div>
+  </div>
+</section>

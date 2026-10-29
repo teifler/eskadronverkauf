@@ -1,0 +1,17 @@
+---
+import site from '../data/site.json';
+const r = site.review;
+---
+<div class="bar">
+  <div class="bar-in">
+    <a class="logo" href="#top">eskadron✶verkauf</a>
+    <nav aria-label="Hauptnavigation">
+      <a href="#angebote">Angebote</a>
+      <a href="#verkaufen">Verkaufen</a>
+      <a href="#wunsch">Wunsch</a>
+      {r.rating && r.count
+        ? <a href={site.links.vinted} target="_blank" rel="noopener" title={`${r.rating} von 5 Sternen · ${r.count} Bewertungen · ${r.source}`}>★ {String(r.rating).replace('.', ',')} ({r.count}) ↗</a>
+        : <a href={site.links.vinted} target="_blank" rel="noopener">Feedback ↗</a>}
+    </nav>
+  </div>
+</div>

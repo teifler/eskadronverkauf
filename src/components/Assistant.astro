@@ -1,0 +1,296 @@
+---
+import site from '../data/site.json';
+// Optional: PUBLIC_WEB3FORMS_KEY in .env setzen -> Wunsch- & Kontaktformular senden echt (Web3Forms, kostenlos).
+// Ohne Key laufen alle Formulare im klar gekennzeichneten Demo-Modus (keine Übertragung).
+const W3F_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+---
+<button id="assistant-btn" aria-haspopup="dialog" aria-label="Kontakt-Assistent öffnen" data-open="assist">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.2-.6L3 21l1.7-4.6A8.4 8.4 0 1 1 21 11.5z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/></svg>
+  <span class="lbl">Wie können wir helfen?</span>
+</button>
+
+<div class="ov" id="ov-assist" role="dialog" aria-modal="true" aria-labelledby="assist-h">
+  <div class="panel">
+    <button class="x" data-close aria-label="Schließen">✕</button>
+    <h3 id="assist-h">Hey! Wie können wir dir helfen?</h3>
+    <p class="psub">Wähl einfach aus – dauert keine Minute.</p>
+    <div class="prodctx" id="assist-prodctx"><span>Es geht um: <b id="assist-prodname"></b></span><button class="cp" data-copyprod>Name kopieren</button></div>
+    <div class="a-opts">
+      <button class="a-opt" data-open="sell"><span class="ic" aria-hidden="true">🏷️</span><span class="t"><b>Ich möchte etwas verkaufen</b><span>Direktankauf oder Kommission – mit Foto-Upload</span></span><span class="ar">→</span></button>
+      <button class="a-opt" data-open="wish"><span class="ic" aria-hidden="true">🔍</span><span class="t"><b>Ich suche mein Wunschstück</b><span>Sag uns, was dir noch fehlt</span></span><span class="ar">→</span></button>
+      <button class="a-opt" data-open="contact"><span class="ic" aria-hidden="true">💬</span><span class="t"><b>Ich habe eine Frage</b><span>Am schnellsten per Instagram-DM</span></span><span class="ar">→</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov-contact" role="dialog" aria-modal="true" aria-labelledby="contact-h">
+  <div class="panel">
+    <button class="x" data-close aria-label="Schließen">✕</button>
+    <h3 id="contact-h">So erreichst du uns</h3>
+    <p class="psub">Am schnellsten antworten wir per Instagram-DM.</p>
+    <div class="prodctx" id="contact-prodctx"><span>Es geht um: <b id="contact-prodname"></b></span><button class="cp" data-copyprod>Name kopieren</button></div>
+    <div class="c-links">
+      <a class="c-link" href={site.links.instagram} target="_blank" rel="noopener"><b>Instagram</b><span>@eskadronverkauf · DM senden</span></a>
+      <a class="c-link" href={site.links.vinted} target="_blank" rel="noopener"><b>Vinted</b><span>Profil katepahl</span></a>
+      <a class="c-link" href={site.links.kleinanzeigen} target="_blank" rel="noopener"><b>Kleinanzeigen</b><span>Unsere Bestandsliste</span></a>
+      <a class="c-link" href={site.links.tiktok} target="_blank" rel="noopener"><b>TikTok</b><span>Profil ansehen</span></a>
+    </div>
+    <form class="form" id="form-contact" data-kind="Kontakt" novalidate>
+      <div class="fld"><label for="cf-msg">Oder schreib uns kurz <span class="req">*</span></label><textarea id="cf-msg" name="nachricht" required placeholder="Deine Frage …"></textarea><span class="err">Bitte gib eine Nachricht ein.</span></div>
+      <div class="fld"><label for="cf-mail">Deine E-Mail <span class="req">*</span></label><input id="cf-mail" name="email" type="email" required placeholder="du@beispiel.de" autocomplete="email" /><span class="err">Bitte gib eine gültige E-Mail-Adresse ein.</span></div>
+      <button class="submit-btn" type="submit">Nachricht senden</button>
+      <p class="p-note" data-demo-note>Prototyp-Hinweis: Ohne hinterlegten Formular-Key wird nichts übertragen oder gespeichert.</p>
+    </form>
+    <div class="demo-ok" role="status" id="ok-contact"><span class="okic">✓</span><h4 data-h></h4><p data-p></p><span class="demo-badge" data-badge></span></div>
+  </div>
+</div>
+
+<div class="ov" id="ov-sell" role="dialog" aria-modal="true" aria-labelledby="sell-h">
+  <div class="panel">
+    <button class="x" data-close aria-label="Schließen">✕</button>
+    <h3 id="sell-h">Deine Reitsportsachen verdienen ein zweites Leben.</h3>
+    <p class="psub">Schick uns ein paar Fotos und Informationen. Wir schauen uns deine Artikel an und melden uns bei dir. Bitte erst nach unserer Freigabe versenden.</p>
+    <form class="form" id="form-sell" novalidate>
+      <div>
+        <p class="fld" style="margin-bottom:8px"><label>1 · Wie möchtest du verkaufen? <span class="req">*</span></label></p>
+        <div class="choice2" role="group" aria-label="Verkaufsart wählen">
+          <button type="button" class="ch-card" data-mode="direkt" aria-pressed="false"><b>Direkt an euch verkaufen</b><span>Ich möchte meine Artikel unkompliziert verkaufen.</span></button>
+          <button type="button" class="ch-card" data-mode="kommission" aria-pressed="false"><b>Für mich verkaufen lassen</b><span>Ihr übernehmt den Verkauf gegen Provision.</span></button>
+        </div>
+        <span class="err" id="mode-err" style="display:none;color:#a33;font-size:12px;margin-top:6px">Bitte wähle eine Verkaufsart.</span>
+      </div>
+      <div>
+        <p class="fld" style="margin-bottom:8px"><label>2 · Dein Artikel</label></p>
+        <div class="fgrid two">
+          <div class="fld"><label for="sf-brand">Marke / Artikel <span class="req">*</span></label><input id="sf-brand" required placeholder="z. B. Eskadron Schabracke Platinum" /><span class="err">Bitte Marke oder Artikel angeben.</span></div>
+          <div class="fld"><label for="sf-size">Größe</label><input id="sf-size" placeholder="z. B. WB / DR" /></div>
+          <div class="fld"><label for="sf-cond">Zustand <span class="req">*</span></label><select id="sf-cond" required><option value="">Bitte wählen …</option><option>Neu mit Etikett</option><option>Neuwertig</option><option>Sehr gut</option><option>Gut</option><option>Gebraucht mit Spuren</option></select><span class="err">Bitte Zustand wählen.</span></div>
+          <div class="fld"><label for="sf-price">Wunschpreis (€)</label><input id="sf-price" type="number" inputmode="decimal" min="0" step="0.5" placeholder="z. B. 45" /></div>
+        </div>
+      </div>
+      <div class="fld">
+        <label id="up-label">3 · Fotos (bis zu 6) <span class="req">*</span></label>
+        <input type="file" id="sf-files" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple hidden />
+        <div class="up-zone" id="up-zone" role="button" tabindex="0" aria-labelledby="up-label" aria-describedby="up-hint">
+          <span class="big-ic" aria-hidden="true">📷</span>
+          <b>Fotos auswählen oder hierher ziehen</b>
+          <span id="up-hint">JPG, PNG, WebP oder HEIC · max. 8 MB pro Foto · direkt von der Handy-Kamera möglich</span>
+        </div>
+        <p class="up-err" id="up-err" role="alert"></p>
+        <div class="previews" id="previews" aria-live="polite"></div>
+      </div>
+      <div class="fld"><label for="sf-notes">Mängel oder Hinweise (optional)</label><textarea id="sf-notes" placeholder="z. B. kleiner Fleck am Rand, einmal gewaschen …"></textarea></div>
+      <div class="fld"><label for="sf-mail">4 · Deine E-Mail <span class="req">*</span></label><input id="sf-mail" type="email" required placeholder="du@beispiel.de" autocomplete="email" /><span class="err">Bitte gib eine gültige E-Mail-Adresse ein.</span></div>
+      <label class="consent"><input type="checkbox" id="sf-consent" aria-describedby="consent-err" required /><span>Ich bin damit einverstanden, dass meine Angaben und Fotos zur Bearbeitung meiner Anfrage verwendet werden.</span></label>
+      <span class="err" id="consent-err" style="display:none;color:#a33;font-size:12px">Bitte bestätige den Hinweis.</span>
+      <button class="submit-btn" type="submit">Anfrage prüfen (Demo)</button>
+      <p class="p-note">Prototyp-Hinweis: Das Verkaufsformular läuft im Demo-Modus, bis ein Upload-Backend angebunden ist (siehe README) – es werden keine Daten übertragen oder gespeichert.</p>
+    </form>
+    <div class="demo-ok" role="status" id="ok-sell"><span class="okic">✓</span><h4>Deine Anfrage ist startklar!</h4><p>In der Live-Version würden wir deine Angaben jetzt erhalten und uns per E-Mail melden – mit Ankaufs-Angebot oder Kommissionsvorschlag und allen Versandinfos. In diesem Prototyp wurde <b>nichts übertragen oder gespeichert</b>.</p><span class="demo-badge">Demo-Modus · keine Datenübertragung</span></div>
+  </div>
+</div>
+
+<div class="ov" id="ov-wish" role="dialog" aria-modal="true" aria-labelledby="wish-h">
+  <div class="panel">
+    <button class="x" data-close aria-label="Schließen">✕</button>
+    <h3 id="wish-h">Dein Wunschstück ist nicht dabei?</h3>
+    <p class="psub">Sag uns, was du suchst. Vielleicht finden wir dein nächstes Second-Hand-Lieblingsstück – versprechen können wir es nicht, aber wir geben unser Bestes. Donnerstags ist außerdem Suchtag auf Instagram.</p>
+    <form class="form" id="form-wish" data-kind="Wunschstück" novalidate>
+      <div class="fgrid two">
+        <div class="fld"><label for="wf-brand">Marke <span class="req">*</span></label><input id="wf-brand" name="marke" required placeholder="z. B. Eskadron" /><span class="err">Bitte Marke angeben.</span></div>
+        <div class="fld"><label for="wf-cat">Kategorie <span class="req">*</span></label><select id="wf-cat" name="kategorie" required><option value="">Bitte wählen …</option><option>Schabracke</option><option>Bandagen</option><option>Set (matchy)</option><option>Halfter</option><option>Decke / Abschwitzdecke</option><option>Reitbekleidung</option><option>Zubehör / Sonstiges</option></select><span class="err">Bitte Kategorie wählen.</span></div>
+        <div class="fld"><label for="wf-size">Größe</label><input id="wf-size" name="groesse" placeholder="z. B. WB, Gr. 38 …" /></div>
+        <div class="fld"><label for="wf-color">Farbe</label><input id="wf-color" name="farbe" placeholder="z. B. Salbei, Navy …" /></div>
+        <div class="fld"><label for="wf-budget">Budget bis (€)</label><input id="wf-budget" name="budget" type="number" inputmode="decimal" min="0" step="1" placeholder="z. B. 60" /></div>
+        <div class="fld"><label for="wf-mail">Deine E-Mail <span class="req">*</span></label><input id="wf-mail" name="email" type="email" required placeholder="du@beispiel.de" autocomplete="email" /><span class="err">Bitte gültige E-Mail angeben.</span></div>
+      </div>
+      <button class="submit-btn" type="submit">Suchauftrag senden</button>
+      <p class="p-note" data-demo-note>Prototyp-Hinweis: Ohne hinterlegten Formular-Key wird nichts übertragen oder gespeichert.</p>
+    </form>
+    <div class="demo-ok" role="status" id="ok-wish"><span class="okic">✓</span><h4 data-h></h4><p data-p></p><span class="demo-badge" data-badge></span></div>
+  </div>
+</div>
+
+<script define:vars={{ W3F_KEY }}>
+'use strict';
+const LIVE = !!W3F_KEY;
+
+/* ---------- Modale & Assistent ---------- */
+let lastFocus = null, prodCtx = '';
+const FOCUSABLE = 'a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])';
+const ovs = { assist: 'ov-assist', contact: 'ov-contact', sell: 'ov-sell', wish: 'ov-wish' };
+
+function openOv(key, opener) {
+  const ov = document.getElementById(ovs[key]); if (!ov) return;
+  closeAll(false);
+  lastFocus = opener || document.activeElement;
+  ov.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.body.classList.add('modal-open');
+  ov.querySelectorAll('.demo-ok.show').forEach(okEl => {
+    okEl.classList.remove('show');
+    const f = ov.querySelector('form'); if (f) f.hidden = false;
+  });
+  ['assist', 'contact'].forEach(k => {
+    const box = document.getElementById(k + '-prodctx');
+    if (box) { box.classList.toggle('show', !!prodCtx); const nm = document.getElementById(k + '-prodname'); if (nm) nm.textContent = prodCtx; }
+  });
+  const first = ov.querySelector(FOCUSABLE); first && first.focus();
+}
+function closeAll(restore = true) {
+  document.querySelectorAll('.ov.open').forEach(o => o.classList.remove('open'));
+  document.body.style.overflow = '';
+  document.body.classList.remove('modal-open');
+  if (restore && lastFocus) { lastFocus.focus(); lastFocus = null; }
+}
+document.addEventListener('click', e => {
+  const opener = e.target.closest('[data-open]');
+  if (opener) { e.preventDefault(); openOv(opener.dataset.open, opener); return; }
+  if (e.target.closest('[data-close]')) { closeAll(); return; }
+  if (e.target.classList && e.target.classList.contains('ov')) { closeAll(); return; }
+  const cp = e.target.closest('[data-copyprod]');
+  if (cp && prodCtx) {
+    const txt = prodCtx + ' – gesehen auf eskadronverkauf';
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(
+      () => { cp.textContent = 'Kopiert ✓'; setTimeout(() => cp.textContent = 'Name kopieren', 1600); },
+      () => { cp.textContent = txt; }
+    );
+  }
+  const card = e.target.closest('[data-prod]');
+  if (card) prodCtx = card.dataset.prod;
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAll();
+  if (e.key === 'Tab') {
+    const ov = document.querySelector('.ov.open'); if (!ov) return;
+    const f = [...ov.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
+
+/* ---------- Verkaufsformular: Auswahl + Foto-Upload ---------- */
+let sellMode = '';
+document.querySelectorAll('.ch-card').forEach(b => b.addEventListener('click', () => {
+  sellMode = b.dataset.mode;
+  document.querySelectorAll('.ch-card').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  document.getElementById('mode-err').style.display = 'none';
+}));
+const upZone = document.getElementById('up-zone');
+const upInput = document.getElementById('sf-files');
+const upErr = document.getElementById('up-err');
+const previews = document.getElementById('previews');
+const MAX_FILES = 6, MAX_MB = 8;
+const OK_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+let files = [];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function renderPreviews() {
+  previews.innerHTML = '';
+  files.forEach((f, i) => {
+    const d = document.createElement('div');
+    d.className = 'prev';
+    d.innerHTML = `<img alt="Vorschau Foto ${i + 1}: ${esc(f.file.name)}" src="${f.url}"><button type="button" class="rm" data-rm="${i}" aria-label="Foto ${i + 1} entfernen">✕</button>`;
+    previews.appendChild(d);
+  });
+}
+previews.addEventListener('click', e => {
+  const b = e.target.closest('[data-rm]'); if (!b) return;
+  const i = +b.dataset.rm;
+  URL.revokeObjectURL(files[i].url);
+  files.splice(i, 1);
+  renderPreviews();
+});
+function showUpErr(msgs) {
+  if (!msgs.length) { upErr.classList.remove('show'); upErr.textContent = ''; return; }
+  upErr.innerHTML = msgs.map(esc).join('<br>');
+  upErr.classList.add('show');
+}
+function addFiles(list) {
+  const errs = [];
+  for (const file of list) {
+    if (files.length >= MAX_FILES) { errs.push(`Maximal ${MAX_FILES} Fotos – „${file.name}“ wurde nicht hinzugefügt.`); continue; }
+    const okType = OK_TYPES.includes(file.type) || /\.(heic|heif)$/i.test(file.name);
+    if (!okType) { errs.push(`„${file.name}“: Bitte nur Bilddateien (JPG, PNG, WebP, HEIC).`); continue; }
+    if (file.size > MAX_MB * 1024 * 1024) { errs.push(`„${file.name}“ ist größer als ${MAX_MB} MB.`); continue; }
+    files.push({ file, url: URL.createObjectURL(file) });
+  }
+  showUpErr(errs);
+  renderPreviews();
+}
+upZone.addEventListener('click', () => upInput.click());
+upZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); upInput.click(); } });
+upInput.addEventListener('change', () => { addFiles(upInput.files); upInput.value = ''; });
+['dragover', 'dragenter'].forEach(ev => upZone.addEventListener(ev, e => { e.preventDefault(); upZone.classList.add('drag'); }));
+['dragleave', 'drop'].forEach(ev => upZone.addEventListener(ev, e => { e.preventDefault(); upZone.classList.remove('drag'); }));
+upZone.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+
+/* ---------- Validierung + Senden ---------- */
+const markBad = (el, bad) => { el.closest('.fld')?.classList.toggle('bad', bad); return !bad; };
+const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+
+function showOk(id, live) {
+  const ok = document.getElementById(id);
+  ok.querySelector('[data-h]')?.replaceChildren(document.createTextNode(live ? 'Angekommen – danke dir!' : 'Sieht gut aus!'));
+  const p = ok.querySelector('[data-p]');
+  if (p) p.innerHTML = live
+    ? 'Deine Nachricht ist bei uns gelandet. Wir melden uns so schnell wie möglich per E-Mail.'
+    : 'In der fertigen Website würde deine Anfrage jetzt bei uns landen. In diesem Prototyp wurde <b>nichts übertragen oder gespeichert</b>.';
+  const b = ok.querySelector('[data-badge]');
+  if (b) b.textContent = live ? 'Gesendet' : 'Demo-Modus · keine Datenübertragung';
+  ok.classList.add('show');
+}
+async function sendForm(form, extra) {
+  if (!LIVE) return false; // Demo-Modus
+  const fd = new FormData(form);
+  fd.append('access_key', W3F_KEY);
+  fd.append('subject', 'eskadronverkauf.de – ' + (form.dataset.kind || 'Anfrage'));
+  Object.entries(extra || {}).forEach(([k, v]) => fd.append(k, v));
+  const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+  return res.ok;
+}
+function wireForm(id, okId, validate, extra) {
+  const form = document.getElementById(id);
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!validate(form)) return;
+    const btn = form.querySelector('.submit-btn');
+    btn.disabled = true;
+    let live = false;
+    try { live = await sendForm(form, extra ? extra() : {}); } catch (_) { live = false; }
+    btn.disabled = false;
+    form.hidden = true;
+    showOk(okId, live);
+  });
+}
+wireForm('form-contact', 'ok-contact', f =>
+  markBad(f.querySelector('#cf-msg'), !f.querySelector('#cf-msg').value.trim()) &
+  markBad(f.querySelector('#cf-mail'), !validEmail(f.querySelector('#cf-mail').value)),
+  () => ({ artikel: prodCtx || '-' })
+);
+wireForm('form-wish', 'ok-wish', f =>
+  markBad(f.querySelector('#wf-brand'), !f.querySelector('#wf-brand').value.trim()) &
+  markBad(f.querySelector('#wf-cat'), !f.querySelector('#wf-cat').value) &
+  markBad(f.querySelector('#wf-mail'), !validEmail(f.querySelector('#wf-mail').value))
+);
+// Verkaufsformular: bewusst Demo bis Upload-Backend existiert (Fotos!), siehe README.
+document.getElementById('form-sell').addEventListener('submit', e => {
+  e.preventDefault();
+  let ok = true;
+  if (!sellMode) { document.getElementById('mode-err').style.display = 'block'; ok = false; }
+  ok = markBad(document.getElementById('sf-brand'), !document.getElementById('sf-brand').value.trim()) && ok;
+  ok = markBad(document.getElementById('sf-cond'), !document.getElementById('sf-cond').value) && ok;
+  ok = markBad(document.getElementById('sf-mail'), !validEmail(document.getElementById('sf-mail').value)) && ok;
+  if (!files.length) { showUpErr(['Bitte füge mindestens ein Foto hinzu.']); ok = false; }
+  const consent = document.getElementById('sf-consent');
+  document.getElementById('consent-err').style.display = consent.checked ? 'none' : 'block';
+  if (!consent.checked) ok = false;
+  if (!ok) return;
+  e.target.hidden = true;
+  document.getElementById('ok-sell').classList.add('show');
+});
+document.addEventListener('input', e => { e.target.closest('.fld')?.classList.remove('bad'); });
+if (LIVE) document.querySelectorAll('[data-demo-note]').forEach(n => n.remove());
+</script>
