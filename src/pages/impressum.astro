@@ -31,7 +31,8 @@ const updated = new Date(l.updated).toLocaleDateString('de-DE', { day: '2-digit'
     <h2>Kontakt</h2>
     <p>
       {l.email && <>E-Mail: <a href={`mailto:${l.email}`}>{l.email}</a><br /></>}
-      {l.phone && <>Telefon: <a href={`tel:${l.phone.replace(/[^\d+]/g, '')}`}>{l.phone}</a></>}
+      {l.phone && <>Telefon: <a href={`tel:${l.phone.replace(/[^\d+]/g, '')}`}>{l.phone}</a><br /></>}
+      Instagram-Direktnachricht: <a href={site.links.instagram} target="_blank" rel="noopener">@eskadronverkauf</a>
     </p>
 
     {(l.vatId || l.smallBusiness) && (
