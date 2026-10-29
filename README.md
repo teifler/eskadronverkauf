@@ -6,7 +6,7 @@
 Landingpage für [@eskadronverkauf](https://www.instagram.com/eskadronverkauf/) – geprüfte Second-Hand-Lieblingsstücke von Eskadron, Kentucky, Samshield & Co.
 Design **„Color Club“**: Salbei, Creme, Rosé, Terrakotta. Astro 5, kein UI-Framework, kleine Vanilla-Inseln für den Farbwelten-Filter, den Kontakt-Assistenten und den Foto-Upload.
 
-**Live:** <https://teifler.github.io/eskadronverkauf/> · [Impressum](https://teifler.github.io/eskadronverkauf/impressum/) · [Datenschutz](https://teifler.github.io/eskadronverkauf/datenschutz/) · **Status:** Prototyp – Demo-Artikel, Formulare im Demo-Modus ([Roadmap](docs/roadmap.md))
+**Live:** <https://teifler.github.io/eskadronverkauf/> · [Impressum](https://teifler.github.io/eskadronverkauf/impressum/) · [Datenschutz](https://teifler.github.io/eskadronverkauf/datenschutz/) · **Status:** Prototyp – Demo-Artikel, Formulare im Demo-Modus, Umbenennung geplant ([Roadmap](docs/roadmap.md))
 
 ## Schnellstart
 
@@ -60,7 +60,7 @@ Tippfehler in den Daten (z. B. `"42 €"` statt `42`, unbekannte Farbwelt, fehle
 | [docs/deployment.md](docs/deployment.md) | GitHub Pages, Variablen, eigene Domain, Rollback |
 | [docs/roadmap.md](docs/roadmap.md) | Offene Punkte und Erledigtes |
 | [docs/decisions/](docs/decisions/) | Architektur-Entscheidungen (ADRs) |
-| [CHANGELOG.md](CHANGELOG.md) | Änderungen pro Version |
+| [CHANGELOG.md](CHANGELOG.md) | Änderungen pro Version · [Releases](https://github.com/teifler/eskadronverkauf/releases) |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Branches, Commits, Pull Requests |
 
 ## Mit Claude Code arbeiten
@@ -80,7 +80,7 @@ Impressum und Datenschutzerklärung sind selbst formuliert und aus `site.json �
 
 ## Noch offen vor dem Launch
 
-E-Mail und Telefon im Impressum ([#1](https://github.com/teifler/eskadronverkauf/issues/1)), echte Artikel ([#2](https://github.com/teifler/eskadronverkauf/issues/2)), verifizierte Bewertung ([#3](https://github.com/teifler/eskadronverkauf/issues/3)), Formulare live ([#4](https://github.com/teifler/eskadronverkauf/issues/4)) – alles im [Meilenstein Go-Live](https://github.com/teifler/eskadronverkauf/milestone/1).
+Neuer Name statt „eskadronverkauf“ (Markenrisiko, [ADR 0005](docs/decisions/0005-neuer-name.md)), E-Mail im Impressum ([#1](https://github.com/teifler/eskadronverkauf/issues/1)), echte Artikel ([#2](https://github.com/teifler/eskadronverkauf/issues/2)), verifizierte Bewertung ([#3](https://github.com/teifler/eskadronverkauf/issues/3)), Formulare live ([#4](https://github.com/teifler/eskadronverkauf/issues/4)) – alles im [Meilenstein Go-Live](https://github.com/teifler/eskadronverkauf/milestone/1).
 
 ## Rechtliches
 

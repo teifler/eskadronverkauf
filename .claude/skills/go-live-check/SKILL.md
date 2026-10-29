@@ -21,7 +21,7 @@ grep -rniE "nachhaltig|umweltfreundlich|klimaneutral|ec\.europa\.eu/consumers/od
 - Datenschutzerklärung passt zum Build: Formulare live → Web3Forms-Abschnitt erscheint? Neue Dienste erwähnt?
 - Impressum-Link in den Bios von Instagram und TikTok (gewerbliche Profile brauchen ein eigenes, als „Impressum“ bezeichnetes Impressum)?
 - Treffer bei Umweltaussagen, OS-Link, TMG oder Privacy Shield → ❌.
-- Außerhalb der Website, aber launch-relevant: Gewerbeanmeldung, Vinted Pro / Kleinanzeigen PRO, Widerrufsbelehrung + Kommissionsvertrag, GPSR-Angaben in den Listings, Markenname (siehe Roadmap).
+- Außerhalb der Website, aber launch-relevant: Gewerbeanmeldung, Vinted Pro / Kleinanzeigen PRO, Widerrufsbelehrung + Kommissionsvertrag, GPSR-Angaben in den Listings, Umbenennung erledigt? ([ADR 0005](../../../docs/decisions/0005-neuer-name.md))
 
 ## 2. Inhalte
 

@@ -34,6 +34,8 @@ Lokal lassen sich alle drei in `.env` setzen (git-ignoriert) oder vor den Befehl
 
 ### Web3Forms-Key setzen
 
+> **Vorher lesen:** Web3Forms ist datenschutzrechtlich heikel (Betreiber in Indien ohne Angemessenheitsbeschluss, US-Spamfilter erhalten IP und E-Mail) – siehe [ADR 0004](decisions/0004-rechtstexte-und-schriften.md). Sobald der Key gesetzt ist, erscheint der Web3Forms-Abschnitt automatisch in der Datenschutzerklärung.
+
 1. Kostenlosen Access Key auf <https://web3forms.com> für die Ziel-E-Mail-Adresse erzeugen.
 2. Repo → Settings → Secrets and variables → Actions → **Variables** → `PUBLIC_WEB3FORMS_KEY`.
    Oder: `gh variable set PUBLIC_WEB3FORMS_KEY --repo teifler/eskadronverkauf`

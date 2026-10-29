@@ -11,7 +11,7 @@ Astro 5, kein UI-Framework, deployt per GitHub Actions auf GitHub Pages.
 - Live: <https://teifler.github.io/eskadronverkauf/>
 - Repo: <https://github.com/teifler/eskadronverkauf>
 - Sprache von Seite, Code-Kommentaren und Doku: **Deutsch**. Du-Ansprache, „Reiter:in“.
-- Status: **Prototyp** – Demo-Artikel, Formulare im Demo-Modus. Impressum und Datenschutz vorhanden, E-Mail/Telefon im Impressum noch offen. Siehe [docs/roadmap.md](docs/roadmap.md).
+- Status: **Prototyp** – Demo-Artikel, Formulare im Demo-Modus. Impressum und Datenschutz live, die E-Mail-Adresse im Impressum fehlt noch. **Umbenennung beschlossen**, neuer Name offen ([ADR 0005](docs/decisions/0005-neuer-name.md)). Siehe [docs/roadmap.md](docs/roadmap.md).
 
 ## Befehle
 
@@ -102,3 +102,4 @@ Der Skill `update-docs` geht das systematisch durch.
 - Das Verkaufsformular sendet absichtlich nie etwas – es braucht ein Upload-Backend ([ADR 0002](docs/decisions/0002-formulare-web3forms-und-demo-modus.md)).
 - Header und Footer erscheinen auch auf Impressum/Datenschutz: interne Anker immer als `` `${base}#anker` `` schreiben, nie nur `#anker`.
 - Web3Forms ist datenschutzrechtlich heikel (Betreiber in Indien, US-Spamfilter) – vor dem Live-Schalten Alternativen prüfen ([ADR 0004](docs/decisions/0004-rechtstexte-und-schriften.md)).
+- Der Name „eskadronverkauf“ wird ersetzt: den Geschäftsnamen nicht an neuen Stellen hart codieren (aus `site.json → name` lesen). Die Umbenennung folgt der Checkliste in [ADR 0005](docs/decisions/0005-neuer-name.md); beschreibende Markennennungen („Eskadron“ als Artikelmarke) bleiben.

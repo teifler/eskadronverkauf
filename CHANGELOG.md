@@ -13,6 +13,8 @@ major = Relaunch, minor = neue Sektion oder Funktion, patch = Fixes und Texte.
 - Links zu Impressum und Datenschutz in Header, Footer und allen Formularen.
 - Inhaltsprüfung kontrolliert die Impressumsdaten und warnt bei fehlender E-Mail-Adresse oder Telefonnummer.
 - Gemeinsames Seitenlayout `src/layouts/Base.astro`.
+- Instagram-Direktnachricht als elektronischer Kontaktweg in Impressum und Datenschutzerklärung.
+- Doku: [ADR 0005](docs/decisions/0005-neuer-name.md) mit 15 geprüften Namensvorschlägen und Umbenennungs-Checkliste.
 
 ### Geändert
 - Hero-Headline „aber nachhaltig.“ → „aber preloved.“ – pauschale Umweltaussagen sind seit 27.09.2026 unzulässig.
