@@ -11,11 +11,17 @@ Nichts automatisch „reparieren“, was Inhalte oder Recht betrifft – Befunde
 ## 1. Recht (Blocker)
 
 ```bash
-grep -n "(folgt)" src/components/Footer.astro
+npm run check 2>&1 | grep -E "⚠|✗"                     # fehlende E-Mail/Telefon im Impressum
+node -e 'console.log(require("./src/data/site.json").legal)'
+grep -rniE "nachhaltig|umweltfreundlich|klimaneutral|ec\.europa\.eu/consumers/odr|TMG|Privacy Shield" src || echo "keine Treffer"
 ```
 
-- Impressum (§ 5 DDG), Datenschutzerklärung (DSGVO, inkl. Web3Forms und GitHub Pages als Hoster), Widerrufsbelehrung, falls über die Seite verkauft wird.
-- Treffer → ❌.
+- `legal.email` fehlt → ❌ (§ 5 Abs. 1 Nr. 2 DDG). `legal.phone` fehlt und kein Formular sendet echt → ❌ (zweiter Kontaktweg).
+- `legal.vatId`: W-IdNr. zugeteilt (ELSTER-Postfach)? Dann eintragen.
+- Datenschutzerklärung passt zum Build: Formulare live → Web3Forms-Abschnitt erscheint? Neue Dienste erwähnt?
+- Impressum-Link in den Bios von Instagram und TikTok (gewerbliche Profile brauchen ein eigenes, als „Impressum“ bezeichnetes Impressum)?
+- Treffer bei Umweltaussagen, OS-Link, TMG oder Privacy Shield → ❌.
+- Außerhalb der Website, aber launch-relevant: Gewerbeanmeldung, Vinted Pro / Kleinanzeigen PRO, Widerrufsbelehrung + Kommissionsvertrag, GPSR-Angaben in den Listings, Markenname (siehe Roadmap).
 
 ## 2. Inhalte
 

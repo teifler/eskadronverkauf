@@ -24,7 +24,9 @@ Jede Änderung auf `main` ist nach ca. 2 Minuten live.
 | Ankauf und Kommission | `src/components/Sell.astro` |
 | Suchtag Donnerstag | `src/components/Thursday.astro` |
 | Über uns | `src/components/About.astro` |
-| Footer, Rechtliches | `src/components/Footer.astro` |
+| Footer | `src/components/Footer.astro` |
+| Impressumsdaten (Name, Adresse, E-Mail, Telefon, USt-/W-IdNr.) | `src/data/site.json` → `legal` |
+| Impressum- und Datenschutztexte | `src/pages/impressum.astro`, `src/pages/datenschutz.astro` |
 | Formular-Texte | `src/components/Assistant.astro` |
 | Bilder | `public/images/` |
 
@@ -60,11 +62,26 @@ Typische Fehler, die die Prüfung abfängt: fehlendes Komma zwischen zwei Artike
 "review": { "rating": 4.9, "count": 123, … }
 ```
 
-Nur echte, gerade geprüfte Zahlen vom Vinted-Profil eintragen. **Beide** Werte setzen oder beide `null` lassen – dann zeigt der Header den neutralen Link „Feedback ↗“. Erfundene oder veraltete Bewertungen sind abmahnfähig.
+Nur echte, gerade geprüfte Zahlen vom Vinted-Profil eintragen. **Beide** Werte setzen oder beide `null` lassen – dann zeigt der Header den neutralen Link „Vinted ↗“. Sobald eine Bewertung eingetragen ist, ergänzt der Footer automatisch den Pflichthinweis, dass wir die Vinted-Bewertungen nicht selbst prüfen (§ 5b UWG). Erfundene oder veraltete Bewertungen sind abmahnfähig.
+
+## Impressumsdaten (`site.json → legal`)
+
+| Feld | Bedeutung |
+|---|---|
+| `name`, `businessName`, `street`, `zip`, `city`, `country` | Anbieterin und ladungsfähige Anschrift (kein Postfach) |
+| `email` | **Pflicht**, wird als Text angezeigt |
+| `phone` | Dringend empfohlen (Pflicht als zweiter Kontaktweg, solange kein Formular echt sendet) |
+| `vatId` | USt-IdNr. oder W-IdNr. – nur wenn vom Finanzamt zugeteilt (ELSTER-Postfach). **Nie die Steuernummer.** |
+| `smallBusiness` | `true` = Kleinunternehmerin nach § 19 UStG (steuert Impressum und Preis-Fußnote) |
+| `scope` | Profile, für die das Impressum ebenfalls gilt |
+| `updated` | Stand-Datum der Rechtstexte (`JJJJ-MM-TT`) – bei jeder Änderung anpassen |
+
+Fehlt `email` oder `phone`, warnt die Inhaltsprüfung bei jedem Build.
 
 ## Texte ändern
 
 Texte stehen direkt im HTML der Komponenten. Beim Ändern bitte:
 - Du-Ansprache und „Reiter:in“ beibehalten.
 - Keine Versprechen, die nicht stimmen („Versand am selben Tag“, „größte Auswahl“).
+- Keine pauschalen Umweltaussagen wie „nachhaltig“ oder „umweltfreundlich“ – seit 27.09.2026 verboten. Konkret bleiben: „gebraucht statt neu“, „preloved“.
 - `<span class="ser">…</span>` macht den kursiven Serifen-Akzent – nur den Text darin ändern.

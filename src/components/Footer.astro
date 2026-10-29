@@ -1,5 +1,9 @@
 ---
 import site from '../data/site.json';
+import products from '../data/products.json';
+import { base } from '../lib/url';
+const hasDemo = products.products.some((p) => p.demo);
+const r = site.review;
 ---
 <footer>
   <div class="cols">
@@ -9,13 +13,13 @@ import site from '../data/site.json';
     </div>
     <div>
       <h4>Shop</h4>
-      <a href="#angebote">Farbwelten</a>
-      <a href="#drops">Fresh Drops</a>
+      <a href={`${base}#angebote`}>Farbwelten</a>
+      <a href={`${base}#drops`}>Fresh Drops</a>
     </div>
     <div>
       <h4>Service</h4>
-      <a href="#verkaufen">Verkaufen</a>
-      <a href="#wunsch">Wunschstück</a>
+      <a href={`${base}#verkaufen`}>Verkaufen</a>
+      <a href={`${base}#wunsch`}>Wunschstück</a>
     </div>
     <div>
       <h4>Social</h4>
@@ -26,10 +30,14 @@ import site from '../data/site.json';
     </div>
     <div>
       <h4>Rechtliches</h4>
-      <a href="#">Impressum (folgt)</a>
-      <a href="#">Datenschutz (folgt)</a>
-      <a href="#">Widerruf (folgt)</a>
+      <a href={`${base}impressum/`}>Impressum</a>
+      <a href={`${base}datenschutz/`}>Datenschutz</a>
     </div>
   </div>
-  <p class="fine">Demo-Artikel sind gekennzeichnet · Markennamen beschreiben gebrauchte Artikel, keine offiziellen Partnerschaften · Fotos: Unsplash (Symbolfotos, Unsplash-Lizenz)</p>
+  <p class="fine">
+    {hasDemo && <>Demo-Artikel sind gekennzeichnet und zeigen Symbolfotos (Unsplash) · </>}
+    „Geprüft“ heißt: von uns persönlich auf Zustand und Mängel angesehen ·
+    Markennamen beschreiben gebrauchte Originalartikel – wir sind kein offizieller Händler und stehen in keiner Verbindung zu den Markeninhabern
+    {r.rating && r.count && <> · Die Bewertung oben stammt aus unserem Vinted-Profil; wir haben keinen Einfluss auf diese Bewertungen und prüfen nicht selbst, ob sie von echten Käufer:innen stammen</>}
+  </p>
 </footer>

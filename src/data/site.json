@@ -1,7 +1,7 @@
 {
   "name": "eskadronverkauf",
   "title": "eskadronverkauf – Reitsport Second Hand | Eskadron, Kentucky & Samshield gebraucht",
-  "description": "Premium Reitsportartikel gebraucht kaufen und verkaufen: Eskadron Schabracken, Kentucky Horsewear, Samshield, Mattes & mehr – geprüfte Second-Hand-Lieblingsstücke. Ankauf & Kommissionsverkauf.",
+  "description": "Premium Reitsportartikel gebraucht kaufen und verkaufen: Eskadron Schabracken, Kentucky Horsewear, Samshield, Mattes & mehr – von uns persönlich auf Zustand geprüfte Second-Hand-Lieblingsstücke. Ankauf & Kommissionsverkauf.",
   "links": {
     "instagram": "https://www.instagram.com/eskadronverkauf/",
     "tiktok": "https://www.tiktok.com/@nele.efl",
@@ -14,5 +14,20 @@
     "count": null,
     "source": "Vinted-Profil katepahl",
     "fallbackLabel": "Kundenfeedback auf Vinted ansehen"
+  },
+  "legal": {
+    "_hinweis": "Pflichtangaben für Impressum und Datenschutzerklärung. email und phone vor dem Go-Live füllen. vatId = USt-IdNr. oder W-IdNr., nur wenn vom BZSt zugeteilt (ELSTER-Postfach prüfen) – nie die Steuernummer. smallBusiness = Kleinunternehmerin nach § 19 UStG. scope = Profile, für die das Impressum ebenfalls gilt.",
+    "name": "Nele Eifler",
+    "businessName": "eskadronverkauf – Reitsport Second Hand",
+    "street": "Burgunderweg 8",
+    "zip": "97941",
+    "city": "Tauberbischofsheim",
+    "country": "Deutschland",
+    "email": null,
+    "phone": null,
+    "vatId": null,
+    "smallBusiness": true,
+    "scope": ["Instagram @eskadronverkauf", "TikTok @nele.efl"],
+    "updated": "2026-10-29"
   }
 }

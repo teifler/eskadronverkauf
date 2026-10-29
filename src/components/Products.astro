@@ -1,6 +1,10 @@
 ---
 import { asset } from '../lib/url';
+import site from '../data/site.json';
 const { id, over, title, titleSer, products, showWorlds = false } = Astro.props;
+// Preisangaben (PAngV): Gesamtpreis + Umsatzsteuer-Hinweis + Versandkosten. Kleinunternehmer:innen schreiben NICHT „inkl. MwSt.“.
+const vatNote = site.legal.smallBusiness ? 'gemäß § 19 UStG wird keine Umsatzsteuer berechnet' : 'inkl. gesetzlicher Umsatzsteuer';
+const hasDemo = products.some((p: any) => p.demo);
 const WORLD_COLORS: Record<string, string> = { sage: '#9fae9b', rose: '#e8bfb4', navy: '#334257', braun: '#6e4a35' };
 const euro = (v: number) => v.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: v % 1 ? 2 : 0 });
 ---
@@ -29,11 +33,12 @@ const euro = (v: number) => v.toLocaleString('de-DE', { style: 'currency', curre
           <span class="brand">{p.brand}</span>
           <span class="name">{p.name} · Gr. {p.size}</span>
           <span class="bottom">
-            <span class="price">{euro(p.price)}</span>
+            <span class="price">{euro(p.price)}<sup aria-hidden="true">*</sup></span>
             <span class="plat">{p.plat}</span>
           </span>
         </span>
       </a>
     ))}
   </div>
+  <p class="pnote">* Endpreise, {vatNote}, zzgl. Versandkosten. Preis, Versandkosten und Bedingungen stehen im jeweiligen Angebot auf Vinted bzw. Kleinanzeigen.{hasDemo && ' Bei Demo-Artikeln sind die Preise Beispiele.'}</p>
 </section>

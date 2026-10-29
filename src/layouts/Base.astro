@@ -1,0 +1,48 @@
+---
+// Gemeinsames HTML-Gerüst aller Seiten. Schriften sind selbst gehostet (gebündelt aus @fontsource) –
+// keine Verbindung zu Google oder anderen Drittanbietern. Lizenzen: public/fonts/OFL-*.txt
+import '@fontsource/source-sans-3/latin-400.css';
+import '@fontsource/source-sans-3/latin-700.css';
+import '@fontsource/gelasio/latin-400.css';
+import '@fontsource/gelasio/latin-400-italic.css';
+import '../styles/global.css';
+import { asset, base } from '../lib/url';
+
+interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  path?: string;      // relativ zur Startseite, z. B. 'impressum/'
+  noindex?: boolean;
+  skipTo?: string;
+}
+const { title, description, ogTitle = title, path = '', noindex = false, skipTo = '#inhalt' } = Astro.props;
+
+// Absolute URLs: og:image/og:url/canonical müssen inkl. Domain sein (WhatsApp-, Instagram-, Google-Vorschau)
+const pageUrl = new URL(base + path, Astro.site).href;
+const ogImage = new URL(asset('images/hero_bay.webp'), Astro.site).href;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#3f4a3c" />
+  <meta property="og:title" content={ogTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={pageUrl} />
+  <link rel="canonical" href={pageUrl} />
+  <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+  <link rel="icon" href={asset('favicon.svg')} type="image/svg+xml" />
+  <slot name="head" />
+</head>
+<body>
+  <a class="skip" href={skipTo}>Zum Inhalt springen</a>
+  <slot />
+</body>
+</html>
