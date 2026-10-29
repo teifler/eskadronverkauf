@@ -1,5 +1,7 @@
 ---
 import site from '../data/site.json';
+import { base } from '../lib/url';
+const privacy = `${base}datenschutz/`;
 // Optional: PUBLIC_WEB3FORMS_KEY in .env setzen -> Wunsch- & Kontaktformular senden echt (Web3Forms, kostenlos).
 // Ohne Key laufen alle Formulare im klar gekennzeichneten Demo-Modus (keine Übertragung).
 const W3F_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
@@ -39,6 +41,7 @@ const W3F_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
       <div class="fld"><label for="cf-msg">Oder schreib uns kurz <span class="req">*</span></label><textarea id="cf-msg" name="nachricht" required placeholder="Deine Frage …"></textarea><span class="err">Bitte gib eine Nachricht ein.</span></div>
       <div class="fld"><label for="cf-mail">Deine E-Mail <span class="req">*</span></label><input id="cf-mail" name="email" type="email" required placeholder="du@beispiel.de" autocomplete="email" /><span class="err">Bitte gib eine gültige E-Mail-Adresse ein.</span></div>
       <button class="submit-btn" type="submit">Nachricht senden</button>
+      <p class="p-note">Wie wir deine Angaben verarbeiten, steht in der <a href={privacy} target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
       <p class="p-note" data-demo-note>Prototyp-Hinweis: Ohne hinterlegten Formular-Key wird nichts übertragen oder gespeichert.</p>
     </form>
     <div class="demo-ok" role="status" id="ok-contact"><span class="okic">✓</span><h4 data-h></h4><p data-p></p><span class="demo-badge" data-badge></span></div>
@@ -81,7 +84,7 @@ const W3F_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
       </div>
       <div class="fld"><label for="sf-notes">Mängel oder Hinweise (optional)</label><textarea id="sf-notes" placeholder="z. B. kleiner Fleck am Rand, einmal gewaschen …"></textarea></div>
       <div class="fld"><label for="sf-mail">4 · Deine E-Mail <span class="req">*</span></label><input id="sf-mail" type="email" required placeholder="du@beispiel.de" autocomplete="email" /><span class="err">Bitte gib eine gültige E-Mail-Adresse ein.</span></div>
-      <label class="consent"><input type="checkbox" id="sf-consent" aria-describedby="consent-err" required /><span>Ich bin damit einverstanden, dass meine Angaben und Fotos zur Bearbeitung meiner Anfrage verwendet werden.</span></label>
+      <label class="consent"><input type="checkbox" id="sf-consent" aria-describedby="consent-err" required /><span>Ich habe die <a href={privacy} target="_blank" rel="noopener">Datenschutzhinweise</a> zur Kenntnis genommen. Meine Angaben und Fotos werden nur zur Bearbeitung meiner Anfrage verwendet.</span></label>
       <span class="err" id="consent-err" style="display:none;color:#a33;font-size:12px">Bitte bestätige den Hinweis.</span>
       <button class="submit-btn" type="submit">Anfrage prüfen (Demo)</button>
       <p class="p-note">Prototyp-Hinweis: Das Verkaufsformular läuft im Demo-Modus, bis ein Upload-Backend angebunden ist (siehe README) – es werden keine Daten übertragen oder gespeichert.</p>
@@ -105,6 +108,7 @@ const W3F_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
         <div class="fld"><label for="wf-mail">Deine E-Mail <span class="req">*</span></label><input id="wf-mail" name="email" type="email" required placeholder="du@beispiel.de" autocomplete="email" /><span class="err">Bitte gültige E-Mail angeben.</span></div>
       </div>
       <button class="submit-btn" type="submit">Suchauftrag senden</button>
+      <p class="p-note">Wir nutzen deine Angaben nur für diesen Suchauftrag – kein Newsletter. Details: <a href={privacy} target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
       <p class="p-note" data-demo-note>Prototyp-Hinweis: Ohne hinterlegten Formular-Key wird nichts übertragen oder gespeichert.</p>
     </form>
     <div class="demo-ok" role="status" id="ok-wish"><span class="okic">✓</span><h4 data-h></h4><p data-p></p><span class="demo-badge" data-badge></span></div>

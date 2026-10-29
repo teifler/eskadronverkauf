@@ -4,7 +4,7 @@ Stand: 2026-10-29
 
 ## Überblick
 
-Eine einzige statische HTML-Seite, zur Build-Zeit von Astro aus Komponenten und zwei JSON-Dateien erzeugt.
+Drei statische HTML-Seiten (Startseite, Impressum, Datenschutz), zur Build-Zeit von Astro aus einem Layout, Komponenten und zwei JSON-Dateien erzeugt.
 Kein Server, keine Datenbank, kein UI-Framework. Das ausgelieferte JavaScript besteht aus zwei kleinen Inline-Skripten.
 
 ```mermaid
@@ -21,25 +21,35 @@ flowchart LR
   B -- Wunsch/Kontakt, nur mit Key --> W[Web3Forms API]
 ```
 
-Entscheidungen dahinter: [ADR 0001](decisions/0001-astro-statisch-auf-github-pages.md), [ADR 0002](decisions/0002-formulare-web3forms-und-demo-modus.md).
+Entscheidungen dahinter: [ADR 0001](decisions/0001-astro-statisch-auf-github-pages.md), [ADR 0002](decisions/0002-formulare-web3forms-und-demo-modus.md), [ADR 0004](decisions/0004-rechtstexte-und-schriften.md).
 
-## Seitenaufbau
+## Seiten und Layout
+
+| Seite | Datei | Inhalt | robots |
+|---|---|---|---|
+| `/` | `src/pages/index.astro` | Landingpage (Sektionen unten) | index |
+| `/impressum/` | `src/pages/impressum.astro` | Impressum aus `site.json → legal` | noindex |
+| `/datenschutz/` | `src/pages/datenschutz.astro` | Datenschutzerklärung; Formular-Abschnitt hängt an `PUBLIC_WEB3FORMS_KEY` | noindex |
+
+Alle Seiten nutzen `src/layouts/Base.astro`: `<head>` mit SEO/OG/canonical, Skip-Link, Import der selbst gehosteten Schriften (Source Sans 3, Gelasio via `@fontsource`, nur `latin`) und von `global.css`. Header und Footer erscheinen auf allen Seiten, ihre Anker sind deshalb mit `base` präfixiert.
+
+## Startseite
 
 Reihenfolge festgelegt in [`src/pages/index.astro`](../src/pages/index.astro):
 
 | # | Komponente | Anker | Inhalt | Daten |
 |---|---|---|---|---|
-| 1 | `Header` | – | Sticky Pill-Navigation, Bewertungs-Link | `site.json → links, review` |
+| 1 | `Header` | – | Sticky Pill-Navigation, Vinted-/Bewertungs-Link, Impressum | `site.json → links, review` |
 | 2 | `Hero` | `#top` | Headline, CTAs, Bild-Mosaik, rotierendes „Preloved“-Siegel | – |
 | 3 | `Products` | `#angebote` | „Finde deine Farbwelt“ mit Farbwelten-Filter | `products.json`, `fresh: false` |
 | 4 | `Sell` | `#verkaufen` | Ankauf und Kommission, 3-Schritte-Erklärung | – |
 | 5 | `Products` | `#drops` | „Fresh Drops“ | `products.json`, `fresh: true` |
 | 6 | `Thursday` | `#wunsch` | Suchtag-Banner, Wunschstück-CTA | `site.json → links` |
 | 7 | `About` | `#ueber` | Über Nele und Kate, Social-Pills | `site.json → links` |
-| 8 | `Footer` | – | Navigation, Social, Rechtliches (Platzhalter), Hinweise | `site.json → links` |
+| 8 | `Footer` | – | Navigation, Social, Impressum/Datenschutz, Hinweise (Demo, „geprüft“, Marken, ggf. Bewertungen) | `site.json`, `products.json` |
 | – | `Assistant` | – | Schwebender Button + 4 Modals | `site.json → links`, `PUBLIC_WEB3FORMS_KEY` |
 
-`Products` ist zweimal eingebunden und wird über Props gesteuert (`over`, `title`, `titleSer`, `products`, `showWorlds`).
+`Products` ist zweimal eingebunden und wird über Props gesteuert (`over`, `title`, `titleSer`, `products`, `showWorlds`). Unter jedem Raster steht die Preis-Fußnote (PAngV), abhängig von `legal.smallBusiness`.
 
 ## Client-JavaScript
 
@@ -77,6 +87,6 @@ Tokens, Typografie und Muster: [Rule `design-system`](../.claude/rules/design-sy
 
 ## Qualitätssicherung
 
-- `scripts/check-content.mjs` validiert `products.json` und `site.json` vor jedem Build (Pflichtfelder, erlaubte Werte, Bild existiert, https-Links, Bewertung vollständig).
+- `scripts/check-content.mjs` validiert `products.json` und `site.json` vor jedem Build (Pflichtfelder, erlaubte Werte, Bild existiert, https-Links, Bewertung vollständig, Impressumsdaten). Fehlende E-Mail/Telefon im Impressum: Warnung (in GitHub Actions als Annotation).
 - `ci.yml` baut jeden Pull Request, `deploy.yml` baut und deployt `main`.
 - Dependabot: npm wöchentlich, GitHub Actions monatlich.

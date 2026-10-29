@@ -1,0 +1,90 @@
+---
+// Datenschutzerklärung (Art. 13 DSGVO). Selbst formuliert, Faktenstand 29.10.2026 – Quellen in ADR 0004.
+// Der Formular-Abschnitt folgt automatisch dem Build: ohne PUBLIC_WEB3FORMS_KEY Demo-Hinweis, mit Key Web3Forms-Abschnitt.
+// Vor jedem neuen Dienst (Formular-Backend, Instagram-Feed, Analyse …) diese Seite anpassen – sonst ist sie falsch.
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import site from '../data/site.json';
+import { base } from '../lib/url';
+
+const l = site.legal;
+const LIVE = !!import.meta.env.PUBLIC_WEB3FORMS_KEY;
+const updated = new Date(l.updated).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+---
+<Base title="Datenschutzerklärung – eskadronverkauf" description="Datenschutzerklärung von eskadronverkauf – Reitsport Second Hand." path="datenschutz/" noindex>
+  <Header />
+  <main id="inhalt" class="legal">
+    <h1>Datenschutzerklärung</h1>
+
+    <h2>Das Wichtigste in Kürze</h2>
+    <ul>
+      <li>Keine Cookies, kein Tracking, keine Analyse-Tools, keine Werbung.</li>
+      <li>Keine eingebetteten Inhalte von Drittanbietern – keine Google Fonts, keine Videos, keine Social-Media-Plugins. Die Schriften liegen auf dieser Website selbst.</li>
+      <li>Die Verbindung ist per HTTPS verschlüsselt.</li>
+      {!LIVE && <li>Die Formulare laufen derzeit im Demo-Modus und übertragen nichts.</li>}
+    </ul>
+
+    <h2>1. Verantwortliche</h2>
+    <address>
+      {l.name}<br />
+      {l.street}<br />
+      {l.zip} {l.city}<br />
+      {l.country}<br />
+      {l.email && <>E-Mail: <a href={`mailto:${l.email}`}>{l.email}</a><br /></>}
+      Instagram-Direktnachricht: <a href={site.links.instagram} target="_blank" rel="noopener">@eskadronverkauf</a>
+    </address>
+    <p>Eine Datenschutzbeauftragte ist nicht benannt, da hierzu keine Pflicht besteht.</p>
+
+    <h2>2. Hosting über GitHub Pages</h2>
+    <p>Diese Website wird über GitHub Pages bereitgestellt. Anbieter ist die GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Für die Auslieferung nutzt GitHub das Content-Delivery-Netzwerk der Fastly, Inc. (USA).</p>
+    <p>Wenn du die Website aufrufst, verarbeitet GitHub technisch notwendige Zugriffsdaten. Nach Angaben von GitHub wird insbesondere deine IP-Adresse aus Sicherheitsgründen protokolliert. Technisch bedingt fallen außerdem übliche Zugriffsdaten an, etwa Datum und Uhrzeit, die aufgerufene Seite, Browser und Betriebssystem (User-Agent) und die zuvor besuchte Seite (Referrer).</p>
+    <p><strong>Zweck und Rechtsgrundlage:</strong> Auslieferung der Website, Stabilität und Abwehr von Missbrauch. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse ist eine sichere, zuverlässige und kostenfreie Bereitstellung der Website.</p>
+    <p><strong>Speicherdauer:</strong> GitHub nennt keine feste Frist, sondern richtet sie nach dem Zweck und gesetzlichen Pflichten. Wir selbst haben keinen Zugriff auf diese Protokolle und werten sie nicht aus.</p>
+    <p><strong>Übermittlung in die USA:</strong> GitHub ist nach dem EU-US Data Privacy Framework zertifiziert. Grundlage der Übermittlung ist der Angemessenheitsbeschluss der EU-Kommission (EU) 2023/1795 nach Art. 45 DSGVO. Weitere Informationen: <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Datenschutzerklärung von GitHub</a>.</p>
+
+    <h2>3. Kontakt per E-Mail oder Instagram</h2>
+    <p>Wenn du uns eine E-Mail oder eine Direktnachricht auf Instagram schreibst, verarbeiten wir deine Kontaktdaten (E-Mail-Adresse bzw. Instagram-Profil), deinen Namen (falls angegeben) und den Inhalt deiner Nachricht, um deine Anfrage zu beantworten. Für Nachrichten über Instagram gelten zusätzlich die Datenschutzbestimmungen von Meta, die die Plattform betreibt.</p>
+    <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO, wenn es um einen Kauf, einen Ankauf oder einen Kommissionsverkauf geht (Anbahnung oder Durchführung eines Vertrags). Bei sonstigen Anfragen Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse ist die Beantwortung deiner Nachricht.</p>
+    <p><strong>Speicherdauer:</strong> Wir löschen deine Anfrage, sobald sie erledigt ist. Kommt ein Vertrag zustande, bewahren wir die dafür nötigen Unterlagen so lange auf, wie es gesetzliche Aufbewahrungspflichten verlangen (insbesondere § 147 AO).</p>
+
+    <h2>4. Formulare auf dieser Website</h2>
+    {LIVE ? (
+      <>
+        <p>Das Kontakt- und das Wunschstück-Formular übermitteln deine Eingaben (Nachricht, Marke, Kategorie, Größe, Farbe, Budget und E-Mail-Adresse) über den Dienst Web3Forms per E-Mail an uns. Technisch bedingt werden dabei auch deine IP-Adresse und der Zeitpunkt der Übermittlung verarbeitet.</p>
+        <p><strong>Empfänger:</strong> Web3Forms wird von Web3Creative, Palakkad, Kerala, Indien, betrieben und ist für uns als Auftragsverarbeiter tätig (Art. 28 DSGVO, Auftragsverarbeitungsvertrag nach den Nutzungsbedingungen von Web3Forms). Web3Forms setzt Unterauftragnehmer ein, darunter Amazon Web Services und Cloudflare (USA), Hetzner (Deutschland/Finnland) sowie die Spamfilter CleanTalk und Akismet (USA), die deine IP-Adresse und E-Mail-Adresse zur Spamprüfung erhalten.</p>
+        <p><strong>Übermittlung in Drittländer:</strong> Für Indien besteht kein Angemessenheitsbeschluss. Grundlage sind die EU-Standardvertragsklauseln nach Art. 46 Abs. 2 lit. c DSGVO, die Bestandteil des Auftragsverarbeitungsvertrags von Web3Forms sind.</p>
+        <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO bei Anfragen zu Kauf, Ankauf, Kommission oder Wunschstück; sonst Art. 6 Abs. 1 lit. f DSGVO (Beantwortung deiner Anfrage).</p>
+        <p><strong>Speicherdauer:</strong> Nach Angaben von Web3Forms werden Übermittlungen dort bis zu drei Jahre gespeichert. In unserem Postfach löschen wir Anfragen, sobald sie erledigt sind, Suchaufträge für Wunschstücke spätestens nach zwölf Monaten. Wir schicken dir keine Werbung oder Newsletter, nur die Antwort auf deine Anfrage.</p>
+        <p>Das Verkaufsformular befindet sich weiterhin im Demo-Modus: Eingaben werden nicht übertragen, ausgewählte Fotos nur lokal in deinem Browser als Vorschau angezeigt und nicht hochgeladen.</p>
+      </>
+    ) : (
+      <p>Die Formulare (Kontakt, Wunschstück, Verkaufen) befinden sich derzeit im Demo-Modus. Deine Eingaben werden weder übertragen noch gespeichert. Fotos, die du im Verkaufsformular auswählst, werden ausschließlich lokal in deinem Browser als Vorschau angezeigt und nicht hochgeladen. Bevor die Formulare echte Daten übertragen, ergänzen wir diese Erklärung.</p>
+    )}
+
+    <h2>5. Links zu sozialen Netzwerken und Plattformen</h2>
+    <p>Wir verlinken auf unsere Profile bei Instagram, TikTok, Vinted und Kleinanzeigen. Das sind einfache Links: Solange du sie nicht anklickst, werden keine Daten an diese Plattformen übertragen. Nach dem Klick gelten die Datenschutzbestimmungen der jeweiligen Plattform.</p>
+
+    <h2>6. Deine Rechte</h2>
+    <p>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und Datenübertragbarkeit (Art. 20). Schreib uns dazu einfach an die oben genannte Adresse.</p>
+
+    <div class="legal-box">
+      <h2>7. Widerspruchsrecht</h2>
+      <p>Soweit wir deine Daten auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO verarbeiten, kannst du dieser Verarbeitung aus Gründen, die sich aus deiner besonderen Situation ergeben, jederzeit widersprechen (Art. 21 DSGVO). Wir verarbeiten deine Daten dann nicht mehr, es sei denn, wir können zwingende schutzwürdige Gründe nachweisen, die deine Interessen überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.</p>
+    </div>
+
+    <h2>8. Beschwerderecht</h2>
+    <p>Du kannst dich bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO), etwa bei der Behörde deines Wohnorts oder der für uns zuständigen:</p>
+    <address>
+      Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg<br />
+      Heilbronner Straße 35, 70191 Stuttgart<br />
+      <a href="https://www.baden-wuerttemberg.datenschutz.de" target="_blank" rel="noopener">www.baden-wuerttemberg.datenschutz.de</a>
+    </address>
+
+    <h2>9. Weitere Hinweise</h2>
+    <p>Du bist nicht verpflichtet, uns Daten bereitzustellen. Ohne E-Mail-Adresse können wir dir allerdings nicht antworten. Eine automatisierte Entscheidungsfindung einschließlich Profiling (Art. 22 DSGVO) findet nicht statt.</p>
+
+    <p class="legal-meta">Stand: {updated} · <a href={`${base}impressum/`}>Impressum</a></p>
+  </main>
+  <Footer />
+</Base>

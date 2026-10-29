@@ -11,7 +11,7 @@ Astro 5, kein UI-Framework, deployt per GitHub Actions auf GitHub Pages.
 - Live: <https://teifler.github.io/eskadronverkauf/>
 - Repo: <https://github.com/teifler/eskadronverkauf>
 - Sprache von Seite, Code-Kommentaren und Doku: **Deutsch**. Du-Ansprache, „Reiter:in“.
-- Status: **Prototyp** – Demo-Artikel, Formulare im Demo-Modus, Rechtstexte fehlen. Siehe [docs/roadmap.md](docs/roadmap.md).
+- Status: **Prototyp** – Demo-Artikel, Formulare im Demo-Modus. Impressum und Datenschutz vorhanden, E-Mail/Telefon im Impressum noch offen. Siehe [docs/roadmap.md](docs/roadmap.md).
 
 ## Befehle
 
@@ -30,14 +30,18 @@ Bei sichtbaren Änderungen zusätzlich im Browser prüfen – mobil (≈ 375 px)
 
 ```
 src/
-  pages/index.astro       Einzige Seite: <head>/SEO, Reihenfolge der Sektionen, Scroll-Reveal, Farbwelten-Filter
+  layouts/Base.astro      HTML-Gerüst aller Seiten: <head>/SEO, Schriften, Skip-Link
+  pages/index.astro       Startseite: Reihenfolge der Sektionen, JSON-LD, Scroll-Reveal, Farbwelten-Filter
+  pages/impressum.astro   Impressum (§ 5 DDG) aus site.json → legal
+  pages/datenschutz.astro Datenschutzerklärung – Formular-Abschnitt folgt PUBLIC_WEB3FORMS_KEY
   components/             Eine Datei pro Sektion: Header, Hero, Products, Sell, Thursday, About, Footer
     Assistant.astro       Kontakt-Assistent: 4 Modals, 3 Formulare, Foto-Upload, Web3Forms-Anbindung
-  data/site.json          Name, SEO-Texte, Social-Links, Bewertung (Header)
+  data/site.json          Name, SEO-Texte, Social-Links, Bewertung, legal (Impressumsdaten)
   data/products.json      Artikel (aktuell Demo-Daten)
   lib/url.ts              base / asset() – Pfade, die unter /eskadronverkauf/ funktionieren
   styles/global.css       Design-System „Color Club“ (Tokens in :root)
 public/images/            Fotos als .webp (aktuell Unsplash-Symbolfotos)
+public/fonts/             OFL-Lizenztexte der selbst gehosteten Schriften
 scripts/check-content.mjs Validiert die JSON-Daten vor jedem Build
 ```
 
@@ -49,12 +53,14 @@ Details: [docs/architecture.md](docs/architecture.md) · Inhalte pflegen: [docs/
 2. **Demo bleibt als Demo erkennbar.** Artikel mit Symbolfoto haben `"demo": true`. Formulare ohne Backend zeigen den Demo-Hinweis. Nie so tun, als würde etwas gesendet.
 3. **Pfade immer über `asset()`** aus `src/lib/url.ts` – nie `/images/...` hart codieren. Die Seite läuft unter `/eskadronverkauf/`.
 4. **Kein UI-Framework und keine neuen Dependencies** ohne Rückfrage. Interaktivität = kleine Vanilla-`<script>`-Inseln.
-5. **Keine externen Ressourcen** (Google Fonts, CDNs, Tracking, Embeds) ohne Rückfrage – DSGVO. Systemschriften sind Absicht.
+5. **Keine externen Ressourcen** (Google Fonts, CDNs, Tracking, Embeds) ohne Rückfrage – DSGVO. Schriften nur selbst gehostet über `@fontsource` (Source Sans 3, Gelasio).
 6. **Farben, Radien und Abstände über die CSS-Tokens** in `global.css` (`--sage`, `--terra`, `--r-md` …).
 7. **Barrierefreiheit erhalten:** Alt-Texte, Labels, Fokus-Falle und Escape in Modals, `prefers-reduced-motion`.
 8. **Keine Secrets committen.** `.env` ist ignoriert. Der Web3Forms-Key ist öffentlich (landet im HTML) und wird als Repo-*Variable* gesetzt.
 9. **Markennamen** (Eskadron, Kentucky, Samshield …) beschreiben gebrauchte Ware – keine Logos, kein Anschein einer offiziellen Partnerschaft.
 10. **Erlaubte Werte** für `world`, `plat` und `cond` stehen in `scripts/check-content.mjs`. Wer dort etwas ändert, ändert auch UI und Doku (siehe Rule `content-and-legal`).
+11. **Rechtstexte folgen dem Verhalten.** Jede neue Datenverarbeitung (Formular-Backend, Feed, Analyse, Embed) braucht **vorher** eine Anpassung von `datenschutz.astro` und `legal.updated`. Kein OS-Plattform-Link, keine Disclaimer-Floskeln ([ADR 0004](docs/decisions/0004-rechtstexte-und-schriften.md)).
+12. **Keine pauschalen Umweltaussagen** („nachhaltig“, „umweltfreundlich“, „klimaneutral“) – seit 27.09.2026 per se unzulässig. Konkret bleiben: „gebraucht statt neu“, „preloved“.
 
 ## Living Docs – Pflicht bei jeder Änderung
 
@@ -94,3 +100,5 @@ Der Skill `update-docs` geht das systematisch durch.
 - `public/images/rearing.webp` ist aktuell nirgends eingebunden.
 - Einige Farben sind hart codiert (`WORLD_COLORS` in `Products.astro`, SVG-Text im Hero, Fehlertexte `#a33`). Für Neues Tokens nutzen.
 - Das Verkaufsformular sendet absichtlich nie etwas – es braucht ein Upload-Backend ([ADR 0002](docs/decisions/0002-formulare-web3forms-und-demo-modus.md)).
+- Header und Footer erscheinen auch auf Impressum/Datenschutz: interne Anker immer als `` `${base}#anker` `` schreiben, nie nur `#anker`.
+- Web3Forms ist datenschutzrechtlich heikel (Betreiber in Indien, US-Spamfilter) – vor dem Live-Schalten Alternativen prüfen ([ADR 0004](docs/decisions/0004-rechtstexte-und-schriften.md)).

@@ -12,7 +12,7 @@ Die Seite läuft auf GitHub Pages unter einem Unterordner: `https://teifler.gith
 
 - Interne Dateien (Bilder, Favicon) **immer** über `asset('images/…')` aus `src/lib/url.ts`. Ein hart codiertes `/images/x.webp` geht live auf 404.
 - Absolute URLs (OG, canonical, JSON-LD) mit `new URL(asset(…), Astro.site)` bauen.
-- Anker innerhalb der Seite (`#angebote`, `#verkaufen`, `#wunsch`, `#drops`, `#ueber`, `#top`) sind unproblematisch. Bei umbenannten IDs Header, Footer und Skip-Link mitziehen.
+- Anker (`#angebote`, `#verkaufen`, `#wunsch`, `#drops`, `#ueber`, `#top`) in Komponenten, die auf mehreren Seiten erscheinen (Header, Footer), immer mit `` `${base}#anker` `` – sonst springen sie auf Impressum/Datenschutz ins Leere. Unterseiten: `` `${base}impressum/` ``. Bei umbenannten IDs Header, Footer und Skip-Link mitziehen.
 - Externe Links: `target="_blank" rel="noopener"`, Ziel aus `site.json → links` statt hart codiert.
 
 ## `SITE` / `BASE_PATH`

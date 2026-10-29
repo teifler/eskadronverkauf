@@ -1,0 +1,65 @@
+---
+// Impressum nach § 5 DDG. Bewusst selbst formuliert (keine Generator-Texte, keine Lizenzpflichten).
+// Bewusst NICHT enthalten: OS-Plattform-Link (Plattform seit 20.07.2025 abgeschaltet, Link wäre irreführend),
+// „Haftung für Links/Inhalte“-Disclaimer (wirkungslos bis riskant), § 18 Abs. 2 MStV (kein journalistisch-redaktionelles Angebot).
+// Recherche und Begründung: docs/decisions/0004-rechtstexte-und-schriften.md
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import site from '../data/site.json';
+import products from '../data/products.json';
+import { base } from '../lib/url';
+
+const l = site.legal;
+const hasDemo = products.products.some((p) => p.demo);
+const updated = new Date(l.updated).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+---
+<Base title="Impressum – eskadronverkauf" description="Impressum von eskadronverkauf – Reitsport Second Hand." path="impressum/" noindex>
+  <Header />
+  <main id="inhalt" class="legal">
+    <h1>Impressum</h1>
+
+    <h2>Anbieterin</h2>
+    <address>
+      {l.name}<br />
+      {l.businessName}<br />
+      {l.street}<br />
+      {l.zip} {l.city}<br />
+      {l.country}
+    </address>
+
+    <h2>Kontakt</h2>
+    <p>
+      {l.email && <>E-Mail: <a href={`mailto:${l.email}`}>{l.email}</a><br /></>}
+      {l.phone && <>Telefon: <a href={`tel:${l.phone.replace(/[^\d+]/g, '')}`}>{l.phone}</a><br /></>}
+      Instagram-Direktnachricht: <a href={site.links.instagram} target="_blank" rel="noopener">@eskadronverkauf</a>
+    </p>
+
+    {(l.vatId || l.smallBusiness) && (
+      <>
+        <h2>Umsatzsteuer</h2>
+        {l.vatId && <p>Identifikationsnummer (USt-IdNr. bzw. W-IdNr.): {l.vatId}</p>}
+        {l.smallBusiness && <p>Kleinunternehmerin im Sinne von § 19 UStG – es wird keine Umsatzsteuer berechnet.</p>}
+      </>
+    )}
+
+    <h2>Verbraucherstreitbeilegung</h2>
+    <p>Wir sind weder bereit noch verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+    <h2>Geltungsbereich</h2>
+    <p>Dieses Impressum gilt für diese Website und für unsere Profile: {l.scope.join(', ')}.</p>
+
+    <h2>Marken</h2>
+    <p>Markennamen wie Eskadron, Kentucky Horsewear, Samshield, Mattes, PS of Sweden, Pikeur oder Maya Delorez verwenden wir ausschließlich, um gebrauchte Originalartikel zu beschreiben. Wir sind kein offizieller Händler dieser Marken und stehen in keiner geschäftlichen Verbindung zu den Markeninhabern.</p>
+
+    <h2>Bild- und Schriftnachweise</h2>
+    <p>
+      {hasDemo && <>Symbolfotos: <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash</a> (Unsplash-Lizenz). Als „Demo · Symbolfoto“ gekennzeichnete Artikel zeigen nicht den tatsächlichen Artikel.<br /></>}
+      Schriften: Source Sans 3 (© 2023 Adobe) und Gelasio (© 2022 The Gelasio Project Authors), beide unter der SIL Open Font License 1.1 – auf dieser Website selbst gehostet, ohne Verbindung zu Drittanbietern.
+      Lizenztexte: <a href={`${base}fonts/OFL-source-sans-3.txt`}>Source Sans 3</a>, <a href={`${base}fonts/OFL-gelasio.txt`}>Gelasio</a>.
+    </p>
+
+    <p class="legal-meta">Stand: {updated} · <a href={`${base}datenschutz/`}>Datenschutzerklärung</a></p>
+  </main>
+  <Footer />
+</Base>

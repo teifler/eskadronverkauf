@@ -26,9 +26,9 @@ Neue Farben zuerst als Token anlegen, dann verwenden. Kein Inline-`style` für F
 Kontrastwerte der Kombinationen stehen in der Rule `accessibility` – weiß auf `--sage` und kleiner Text in `--terra` reichen nicht für WCAG AA.
 
 ## Typografie
-- Fließtext: Systemschrift `'Trebuchet MS', Verdana, Helvetica, sans-serif`.
-- Akzent: `.ser` = Georgia kursiv – für das zweite Satzglied in Headlines („Finde deine *Farbwelt*“).
-- **Keine Webfonts** (Google Fonts o. Ä.) – DSGVO und Performance.
+- Fließtext: **Source Sans 3** (400, 700), Fallback `'Trebuchet MS', Verdana, sans-serif`.
+- Akzent: `.ser` = **Gelasio** kursiv (metrisch an Georgia angelehnt) – für das zweite Satzglied in Headlines („Finde deine *Farbwelt*“). Preise: Gelasio normal.
+- Schriften sind **selbst gehostet** über `@fontsource` (Import in `src/layouts/Base.astro`, nur `latin`-Subset). Nie Google Fonts oder andere CDNs. Neue Schnitte nur mit SIL-OFL-Lizenz, Lizenztext nach `public/fonts/` und Nachweis im Impressum.
 
 ## Muster
 - Sektion: `<section id="…" aria-label="…">` → `.sechead` (`.over` + `h2` mit `.ser`) oder `.duo` (Bild/Text).

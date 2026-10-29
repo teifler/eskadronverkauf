@@ -1,17 +1,22 @@
 ---
 import site from '../data/site.json';
+import { base } from '../lib/url';
 const r = site.review;
+// Anker mit base-Präfix, damit die Navigation auch von Impressum/Datenschutz aus funktioniert.
+// Link heißt „Vinted“, nicht „Feedback“: wer Bewertungen bewirbt, muss erklären, ob/wie sie geprüft werden (§ 5b Abs. 3 UWG) –
+// der Hinweis dazu erscheint im Footer, sobald rating/count gesetzt sind.
 ---
 <div class="bar">
   <div class="bar-in">
-    <a class="logo" href="#top">eskadron✶verkauf</a>
+    <a class="logo" href={`${base}#top`}>eskadron✶verkauf</a>
     <nav aria-label="Hauptnavigation">
-      <a href="#angebote">Angebote</a>
-      <a href="#verkaufen">Verkaufen</a>
-      <a href="#wunsch">Wunsch</a>
+      <a href={`${base}#angebote`}>Angebote</a>
+      <a href={`${base}#verkaufen`}>Verkaufen</a>
+      <a href={`${base}#wunsch`}>Wunsch</a>
       {r.rating && r.count
         ? <a href={site.links.vinted} target="_blank" rel="noopener" title={`${r.rating} von 5 Sternen · ${r.count} Bewertungen · ${r.source}`}>★ {String(r.rating).replace('.', ',')} ({r.count}) ↗</a>
-        : <a href={site.links.vinted} target="_blank" rel="noopener">Feedback ↗</a>}
+        : <a href={site.links.vinted} target="_blank" rel="noopener">Vinted ↗</a>}
+      <a href={`${base}impressum/`}>Impressum</a>
     </nav>
   </div>
 </div>

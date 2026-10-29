@@ -5,6 +5,25 @@ major = Relaunch, minor = neue Sektion oder Funktion, patch = Fixes und Texte.
 
 ## [Unreleased]
 
+### Hinzugefügt
+- Impressum (`/impressum/`) und Datenschutzerklärung (`/datenschutz/`), selbst formuliert auf Basis einer Recherche zu DDG, DSGVO, UWG und PAngV ([ADR 0004](docs/decisions/0004-rechtstexte-und-schriften.md)). Pflichtdaten zentral in `site.json → legal`.
+- Die Datenschutzerklärung passt sich automatisch an: Demo-Hinweis ohne Web3Forms-Key, Web3Forms-Abschnitt mit Key.
+- Selbst gehostete Schriften Source Sans 3 und Gelasio (SIL OFL, ohne Google-Verbindung), Lizenztexte unter `/fonts/`.
+- Preis-Fußnote nach PAngV unter jedem Produktraster (Endpreise, § 19 UStG, zzgl. Versand).
+- Links zu Impressum und Datenschutz in Header, Footer und allen Formularen.
+- Inhaltsprüfung kontrolliert die Impressumsdaten und warnt bei fehlender E-Mail-Adresse oder Telefonnummer.
+- Gemeinsames Seitenlayout `src/layouts/Base.astro`.
+
+### Geändert
+- Hero-Headline „aber nachhaltig.“ → „aber preloved.“ – pauschale Umweltaussagen sind seit 27.09.2026 unzulässig.
+- „Geprüft“ wird erklärt: von uns persönlich auf Zustand und Mängel angesehen.
+- Header-Link „Feedback ↗“ heißt jetzt „Vinted ↗“. Sobald eine Bewertung eingetragen ist, erscheint im Footer der Pflichthinweis zur Bewertungsprüfung (§ 5b UWG).
+- Checkbox im Verkaufsformular: „Datenschutzhinweise zur Kenntnis genommen“ statt Einwilligung (passt zur Rechtsgrundlage Art. 6 Abs. 1 lit. b DSGVO).
+- Markenhinweis im Footer präzisiert: kein offizieller Händler, keine Verbindung zu den Markeninhabern.
+
+### Entfernt
+- Platzhalter „Widerruf (folgt)“ im Footer – über die Website wird nichts direkt verkauft.
+
 ## [0.1.0] – 2026-10-29
 
 Erste Version im Repository, live auf GitHub Pages.
