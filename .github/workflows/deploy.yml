@@ -10,17 +10,29 @@ permissions:
   pages: write
   id-token: write
 
+# Nur ein Deploy gleichzeitig; ein laufender Produktions-Deploy wird nicht abgebrochen.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: withastro/action@v3
-        # site/base kommen aus astro.config.mjs; alternativ hier via env SITE / BASE_PATH überschreiben
+      - uses: actions/checkout@v7
+      - id: pages
+        uses: actions/configure-pages@v6
+      - uses: withastro/action@v6
+        with:
+          node-version: 22
+        env:
+          # site/base aus der Pages-Konfiguration (eigene Domain → base_path leer → '/')
+          SITE: ${{ steps.pages.outputs.origin }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path || '/' }}
+          # Öffentlicher Web3Forms-Key: Repo → Settings → Secrets and variables → Actions → Variables.
+          # Leer = Formulare im Demo-Modus. Bewusst Variable statt Secret: der Key landet ohnehin im HTML.
+          PUBLIC_WEB3FORMS_KEY: ${{ vars.PUBLIC_WEB3FORMS_KEY }}
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -29,4 +41,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

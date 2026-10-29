@@ -1,0 +1,35 @@
+name: Fehler melden
+description: Etwas auf der Website funktioniert nicht oder sieht kaputt aus.
+labels: [bug]
+body:
+  - type: textarea
+    id: was
+    attributes:
+      label: Was ist passiert?
+      description: Und was hättest du erwartet?
+    validations:
+      required: true
+  - type: textarea
+    id: schritte
+    attributes:
+      label: So kann man es nachstellen
+      placeholder: |
+        1. Seite auf dem Handy öffnen
+        2. Auf „Set verkaufen“ tippen
+        3. …
+  - type: dropdown
+    id: geraet
+    attributes:
+      label: Gerät
+      multiple: true
+      options: [Handy, Tablet, Laptop/PC]
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: z. B. Safari auf iPhone, Chrome auf Android
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Einfach hier hineinziehen.

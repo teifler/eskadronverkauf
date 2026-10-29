@@ -1,71 +1,83 @@
-# eskadronverkauf – Color Club (Astro)
+# eskadronverkauf – Reitsport Second Hand
 
-Landingpage für @eskadronverkauf (Reitsport Second Hand) im Design **Color Club**.
-Astro 5, kein Framework-JS, nur kleine Vanilla-Inseln (Farbwelten-Filter, Kontakt-Assistent, Foto-Upload).
+[![Deploy](https://github.com/teifler/eskadronverkauf/actions/workflows/deploy.yml/badge.svg)](https://github.com/teifler/eskadronverkauf/actions/workflows/deploy.yml)
+[![Live](https://img.shields.io/badge/live-teifler.github.io%2Feskadronverkauf-8fa08a)](https://teifler.github.io/eskadronverkauf/)
 
-## Lokal starten
+Landingpage für [@eskadronverkauf](https://www.instagram.com/eskadronverkauf/) – geprüfte Second-Hand-Lieblingsstücke von Eskadron, Kentucky, Samshield & Co.
+Design **„Color Club“**: Salbei, Creme, Rosé, Terrakotta. Astro 5, kein UI-Framework, kleine Vanilla-Inseln für den Farbwelten-Filter, den Kontakt-Assistenten und den Foto-Upload.
+
+**Live:** <https://teifler.github.io/eskadronverkauf/> · **Status:** Prototyp – Demo-Artikel, Formulare im Demo-Modus ([Roadmap](docs/roadmap.md))
+
+## Schnellstart
 
 ```bash
-npm install
-npm run dev        # http://localhost:4321
-npm run build      # Produktions-Build nach dist/
+nvm use            # Node 22 (.nvmrc)
+npm ci
+npm run dev        # http://localhost:4321/eskadronverkauf/
+npm run build      # Inhaltsprüfung + Produktions-Build nach dist/
 npm run preview    # dist/ lokal ansehen
 ```
 
-## In 3 Schritten auf GitHub Pages
+Jeder Push auf `main` geht automatisch live (GitHub Actions → GitHub Pages, ca. 2 Minuten).
 
-1. **Repo anlegen & pushen**
-   ```bash
-   git init && git add -A && git commit -m "init"
-   git branch -M main
-   git remote add origin git@github.com:USERNAME/eskadronverkauf.git
-   git push -u origin main
-   ```
-2. **`astro.config.mjs` anpassen:** `SITE` auf `https://USERNAME.github.io` setzen (bzw. eigene Domain). `BASE` bleibt `/eskadronverkauf` (= Repo-Name). Bei eigener Domain: `BASE = '/'`.
-3. **GitHub → Repo → Settings → Pages → Source: „GitHub Actions“.** Der Workflow `.github/workflows/deploy.yml` baut und deployt bei jedem Push auf `main` automatisch.
+## Projektstruktur
 
-Live-URL: `https://USERNAME.github.io/eskadronverkauf/`
+```
+src/
+  pages/index.astro       Seite, <head>/SEO, Sektionsreihenfolge
+  components/             Header · Hero · Products · Sell · Thursday · About · Footer · Assistant
+  data/site.json          Titel, Beschreibung, Social-Links, Bewertung
+  data/products.json      Artikel
+  lib/url.ts              asset() – Pfade für den Unterordner /eskadronverkauf/
+  styles/global.css       Design-System (Tokens)
+public/images/            Fotos (.webp)
+scripts/check-content.mjs Prüft die JSON-Daten vor jedem Build
+docs/                     Architektur, Inhalte, Deployment, Roadmap, Entscheidungen
+.claude/                  Rules und Skills für Claude Code
+```
 
-## Artikel pflegen
+## Inhalte pflegen
 
-`src/data/products.json` – pro Artikel ein Objekt:
-
-| Feld | Bedeutung |
-|---|---|
-| `brand`, `name`, `size`, `cond`, `price` | Anzeige auf der Karte |
-| `plat`, `url` | Plattform-Badge + Link zum echten Listing (Vinted/Kleinanzeigen) |
-| `img` | Dateiname in `public/images/` |
-| `world` | Farbwelt-Filter: `sage` \| `rose` \| `navy` \| `braun` |
-| `fresh` | `true` = Sektion „Fresh Drops“, sonst „Aktuelle Angebote“ |
-| `demo` | `true` = Badge „Demo · Symbolfoto“. Bei echten Produktfotos auf `false` setzen. |
-
-Eigene Produktfotos einfach als `.webp`/`.jpg` nach `public/images/` legen und in der JSON referenzieren.
-
-## Bewertungen (Header)
-
-`src/data/site.json` → `review`: Solange `rating`/`count` `null` sind, zeigt der Header den neutralen Link „Feedback ↗“.
-**Erst mit verifizierten Zahlen füllen** (Vinted-Profil checken), dann erscheint `★ 4,9 (123) ↗` automatisch.
-Keine erfundenen Bewertungen eintragen – wettbewerbsrechtlich riskant.
+Artikel, Preise, Links und Texte lassen sich direkt im Browser auf GitHub ändern – Anleitung mit allen Feldern: **[docs/content.md](docs/content.md)**.
+Tippfehler in den Daten (z. B. `"42 €"` statt `42`, unbekannte Farbwelt, fehlendes Foto) fängt die Inhaltsprüfung ab, bevor etwas live geht.
 
 ## Formulare
 
-- **Wunschstück & Kontakt:** laufen standardmäßig im klar gekennzeichneten **Demo-Modus** (keine Übertragung).
-  Echtes Senden: kostenlosen Key bei [web3forms.com](https://web3forms.com) holen und als `.env` anlegen:
-  ```
-  PUBLIC_WEB3FORMS_KEY=xxxxxxxx-xxxx-....
-  ```
-  Dann neu bauen – beide Formulare senden per E-Mail, der Demo-Hinweis verschwindet.
-- **Verkaufsformular (mit Fotos):** bleibt bewusst Demo, bis ein Upload-Backend existiert.
-  Optionen: Formspree (Datei-Upload im Bezahlplan), eigener Cloudflare Worker + R2, oder kleiner Endpoint auf eurem Server.
-  Einstiegspunkt im Code: `src/components/Assistant.astro`, Kommentar „Verkaufsformular: bewusst Demo…“.
+| Formular | Status |
+|---|---|
+| Kontakt, Wunschstück | Demo-Modus, bis die Repo-Variable `PUBLIC_WEB3FORMS_KEY` gesetzt ist ([Anleitung](docs/deployment.md#web3forms-key-setzen)) |
+| Verkaufen (mit Fotos) | Bewusst Demo, bis ein Upload-Backend existiert ([ADR 0002](docs/decisions/0002-formulare-web3forms-und-demo-modus.md), [#5](https://github.com/teifler/eskadronverkauf/issues/5)) |
 
-## Noch offen für den Live-Gang
+## Dokumentation
 
-- Impressum / Datenschutz / Widerruf (Footer-Platzhalter ersetzen)
-- Echte Produktfotos + echte Listing-Links (`demo: false`)
-- Vinted-Bewertung verifizieren und in `site.json` eintragen
-- Instagram-Feed optional über Meta Graph API/oEmbed oder Widget (Behold, LightWidget)
+| | |
+|---|---|
+| [AGENTS.md](AGENTS.md) | Einstieg und Arbeitsregeln – für KI-Agents und Menschen |
+| [docs/content.md](docs/content.md) | Inhalte pflegen |
+| [docs/architecture.md](docs/architecture.md) | Aufbau und Datenfluss |
+| [docs/deployment.md](docs/deployment.md) | GitHub Pages, Variablen, eigene Domain, Rollback |
+| [docs/roadmap.md](docs/roadmap.md) | Offene Punkte und Erledigtes |
+| [docs/decisions/](docs/decisions/) | Architektur-Entscheidungen (ADRs) |
+| [CHANGELOG.md](CHANGELOG.md) | Änderungen pro Version |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Branches, Commits, Pull Requests |
 
-## Lizenzen
+## Mit Claude Code arbeiten
 
-Fotos in `public/images/`: Unsplash (Unsplash-Lizenz, Symbolfotos). Bei Ersatz durch eigene Fotos entfällt der Hinweis im Footer.
+[`CLAUDE.md`](CLAUDE.md) lädt `AGENTS.md`. Dazu kommen pfadbezogene Regeln in [`.claude/rules/`](.claude/rules/) und diese Skills:
+
+| Befehl | Was passiert |
+|---|---|
+| `/add-product` | Artikel anlegen, ändern oder entfernen – inkl. Foto-Zuschnitt |
+| `/update-docs` | Doku nach einer Änderung synchronisieren |
+| `/go-live-check` | Launch-Bereitschaft prüfen (Recht, Demo, Formulare, SEO, A11y) |
+| `/ship` | Build → Commit → Push/PR → Deploy beobachten → Live-Seite prüfen |
+
+## Noch offen vor dem Launch
+
+Impressum/Datenschutz ([#1](https://github.com/teifler/eskadronverkauf/issues/1)), echte Artikel ([#2](https://github.com/teifler/eskadronverkauf/issues/2)), verifizierte Bewertung ([#3](https://github.com/teifler/eskadronverkauf/issues/3)), Formulare live ([#4](https://github.com/teifler/eskadronverkauf/issues/4)) – alles im [Meilenstein Go-Live](https://github.com/teifler/eskadronverkauf/milestone/1).
+
+## Rechtliches
+
+- Fotos in `public/images/`: [Unsplash](https://unsplash.com/license) (Symbolfotos). Bei Ersatz durch eigene Fotos entfällt der Hinweis im Footer.
+- Markennamen beschreiben gebrauchte Artikel, keine offiziellen Partnerschaften.
+- Code und Inhalte: alle Rechte vorbehalten.

@@ -11,15 +11,17 @@ import About from '../components/About.astro';
 import Footer from '../components/Footer.astro';
 import Assistant from '../components/Assistant.astro';
 
-import { asset } from '../lib/url';
-const ogImage = asset('images/hero_bay.webp');
+import { asset, base } from '../lib/url';
+// Absolute URLs: og:image/og:url/canonical müssen inkl. Domain sein (WhatsApp-, Instagram-, Google-Vorschau)
+const pageUrl = new URL(base, Astro.site).href;
+const ogImage = new URL(asset('images/hero_bay.webp'), Astro.site).href;
 
 // JSON-LD: Organisation + Angebotsliste (SEO)
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: site.name,
-  url: Astro.site ?? undefined,
+  url: pageUrl,
   sameAs: Object.values(site.links),
   description: site.description,
 };
@@ -37,6 +39,8 @@ const jsonLd = {
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="de_DE" />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={pageUrl} />
+  <link rel="canonical" href={pageUrl} />
   <meta name="robots" content="index, follow" />
   <link rel="icon" href={asset('favicon.svg')} type="image/svg+xml" />
   <link rel="preload" as="image" href={asset('images/palomino.webp')} />
